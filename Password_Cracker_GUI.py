@@ -1,4 +1,4 @@
-__version__ = "6.16"
+__version__ = "6.17"
 
 import os
 import sys
@@ -8,6 +8,7 @@ import codecs
 import random
 import string
 import math
+# import torch
 import numpy as np
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -22,6 +23,9 @@ from threading import Lock
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from collections import defaultdict
+
+
+
 
 # AI密码生成器类
 class AIPasswordGenerator:
@@ -449,6 +453,11 @@ class PasswordCrackerGUI(QMainWindow):
         super().__init__()
         self.setWindowTitle("7z压缩文件密码破解工具")
         self.setGeometry(100, 100, 1200, 800)
+
+        # 添加这行代码设置窗口图标
+        if os.path.exists("icon.ico"):
+            self.setWindowIcon(QIcon("icon.ico"))
+
         self.cracker_threads = {}
         self.settings = QSettings("7zCracker", "PasswordCracker")
         self.config_file = "cracker_config.json"
