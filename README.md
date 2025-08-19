@@ -10,6 +10,11 @@
 7. [版本更新历史](#版本更新历史)
 8. [技术支持与反馈](#技术支持与反馈)
 
+## 软件截图
+
+<img width="1202" height="832" alt="image" src="https://github.com/user-attachments/assets/f7fd9135-d9e0-42b4-8c4e-a8ad0e94a6c1" />
+
+
 ## 软件概述
 
 ### 1.1 软件简介
