@@ -3,7 +3,7 @@ __version__ = "6.17"
 import os
 import sys
 import json
-import subprocess
+# import subprocess
 import codecs
 import random
 import string
@@ -24,7 +24,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from collections import defaultdict
 
-
+if sys.platform == 'win32':
+    import subprocess
+    STARTUPINFO = subprocess.STARTUPINFO()
+    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    STARTUPINFO.wShowWindow = subprocess.SW_HIDE
+else:
+    import subprocess
+    STARTUPINFO = None
 
 
 # AI密码生成器类
@@ -287,7 +294,20 @@ class ArchiveCracker(QThread):
     def try_password(self, password):
         try:
             cmd = [self.seven_zip_path, 't', '-p' + password, self.archive_path]
-            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            if sys.platform == 'win32':
+                process = subprocess.Popen(
+                    cmd, 
+                    stdout=subprocess.PIPE, 
+                    stderr=subprocess.PIPE,
+                    startupinfo=STARTUPINFO  # 添加这行来隐藏窗口
+                )
+            else:
+                process = subprocess.Popen(
+                    cmd, 
+                    stdout=subprocess.PIPE, 
+                    stderr=subprocess.PIPE
+                )
+            
             stdout, stderr = process.communicate()
             
             if process.returncode == 0:
@@ -295,6 +315,7 @@ class ArchiveCracker(QThread):
             return False
         except Exception as e:
             return False
+
 
     def process_dictionary(self, dict_path, dict_index):
         try:
